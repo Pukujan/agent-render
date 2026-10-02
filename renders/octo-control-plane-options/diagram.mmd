@@ -1,0 +1,50 @@
+%% Octo control-plane options: today vs the candidate stacks.
+%% Claim: the hand-built middle layer is what a mature stack already provides.
+flowchart LR
+  subgraph TODAY["TODAY - hand-rolled, 3 containers"]
+    direction TB
+    TB["Browser<br/>custom React dashboard"]
+    TN["octo-api<br/>Node ~2350 lines<br/>OAuth + sessions + REST + jobs"]
+    TP[("octo-db<br/>bare Postgres<br/>RLS declared, NOT enforced")]
+    TR["R2 active"]
+    TD["Drive cold"]
+    TB --> TN
+    TN --> TP
+    TN --> TR
+    TN --> TD
+  end
+
+  subgraph PATHB["PATH B - one self-hosted Supabase"]
+    direction TB
+    BB["Browser<br/>Studio + thin Octo UI"]
+    BS["Supabase stack<br/>GoTrue + PostgREST + Storage<br/>Studio + Kong + meta"]
+    BP[("Postgres<br/>RLS ENFORCED")]
+    BR["R2 via Storage API"]
+    BD["Drive cold"]
+    BB --> BS
+    BS --> BP
+    BS --> BR
+    BS --> BD
+  end
+
+  subgraph PATHA["PATH A - Supabase Cloud, project per workspace"]
+    direction TB
+    AB["Browser<br/>Cloud Studio, one per project"]
+    AA["Supabase Cloud<br/>managed, not self-hosted"]
+    AP[("one Postgres<br/>per workspace")]
+    AR["Supabase Storage<br/>not R2"]
+    AB --> AA
+    AA --> AP
+    AA --> AR
+  end
+
+  TN -.->|"replaced by"| BS
+  TP -.->|"replaced by"| BP
+  TN -.->|"not self-hosted"| AA
+
+  classDef hand fill:#fde68a,stroke:#b45309,color:#1f2937
+  classDef mature fill:#bbf7d0,stroke:#15803d,color:#1f2937
+  classDef store fill:#e2e8f0,stroke:#475569,color:#1f2937
+  class TB,TN hand
+  class BS,BP,BB,AA,AB mature
+  class TP,TR,TD,BR,BD,AP,AR store

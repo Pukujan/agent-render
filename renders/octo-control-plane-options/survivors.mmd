@@ -1,0 +1,35 @@
+%% What stays custom under EVERY option.
+%% Claim: these have no equivalent in any mature stack, so they are the real Octo.
+flowchart TB
+  subgraph MATURE["Provided by a mature stack - stop building"]
+    direction LR
+    M1["Login + sessions<br/>GoTrue"]
+    M2["Table + SQL admin<br/>Studio"]
+    M3["RLS policy editor<br/>Studio"]
+    M4["Auto REST CRUD<br/>PostgREST"]
+    M5["Thumbnails<br/>imgproxy"]
+    M6["Object browse<br/>Storage API"]
+  end
+
+  subgraph CUSTOM["No equivalent anywhere - stays custom"]
+    direction LR
+    C1["R2 active to Drive cold<br/>archive lifecycle<br/>hash-verified copy + recall"]
+    C2["Workspace-scoped<br/>agent keys<br/>octo_live_ws_ + presets"]
+    C3["Job scheduler<br/>+ activity trail"]
+    C4["Gallery +<br/>revocable share links"]
+    C5["Human-confirmation<br/>gate on destructive commands"]
+  end
+
+  subgraph PROJECTIONS["Projections - link out, do not unify"]
+    direction LR
+    P1["pgvector<br/>inside Postgres<br/>no separate console"]
+    P2["Neo4j<br/>Neo4j Browser"]
+    P3["DuckDB / Parquet<br/>no console"]
+  end
+
+  classDef mature fill:#bbf7d0,stroke:#15803d,color:#1f2937
+  classDef custom fill:#fde68a,stroke:#b45309,color:#1f2937
+  classDef proj fill:#e2e8f0,stroke:#475569,color:#1f2937
+  class M1,M2,M3,M4,M5,M6 mature
+  class C1,C2,C3,C4,C5 custom
+  class P1,P2,P3 proj
